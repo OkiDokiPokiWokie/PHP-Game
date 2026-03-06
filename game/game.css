@@ -1,0 +1,46 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Prevents the whole page from scrolling */
+}
+.main-container {
+  height: 100vh;
+}
+.shop-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 70px); /* Adjust based on header height */
+}
+
+
+
+
+/* Chain the classes with dots and NO SPACES */
+button.codeButtonContainer {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer;
+    outline: none !important;
+    box-shadow: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensure Bootstrap's hover effect doesn't bring the border back */
+button.codeButtonContainer:hover, 
+button.codeButtonContainer:active, 
+button.codeButtonContainer:focus {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+img.codeButton {
+    width: 300px; 
+    height: auto; 
+    display: block;
+    /* No margin auto needed if the parent button is a flexbox */
+}
+
+
