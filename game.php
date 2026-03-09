@@ -44,6 +44,9 @@ if (file_exists($filePath)) {
                     <h3 class="text-success mb-0 text-center">
                         $<span id="moneyAmount">0</span>
                     </h3>
+                    <h3 class="text-success mb-0 text-center">
+                        MPS: <span id="mps-display">0</span>
+                    </h3>
                     <button class="btn codeButtonContainer"> 
                         <img src="game/assets/keyboard.png" alt="codeButton" id="codeButton" class="codeButton" width="300">
                     </button>

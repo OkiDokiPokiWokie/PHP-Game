@@ -1,4 +1,5 @@
 const moneyAmount = document.getElementById('moneyAmount');
+const mps_display = document.getElementById('mps-display');
 const codeButton = document.getElementById('codeButton');
 
 // Level 2: Collaborative - Attaching listeners to multiple shop buttons
@@ -9,7 +10,7 @@ const shopButtons = document.querySelectorAll('.shop-btn');
 let mps = serverData.mps || 0;
 let totalMoney = serverData.total_money || 0;
 let currentMoney = serverData.current_money || 0;
-let click = 1;
+let click = 50;
 let clickMultiplier = 1;
 
 
@@ -160,6 +161,7 @@ function purcahseItem(itemId) {
         item.cost = Math.floor(item.cost * 1.15)
       }
   updateUI(shop);
+  return(item.code);
 }
 
 
@@ -169,7 +171,9 @@ shopButtons.forEach(button => {
       // 'this' refers to the specific button that was clicked
       const itemId = this.dataset.id;
 
-      purcahseItem(itemId);
+      mps += purcahseItem(itemId);
+      moneyAmount.innerText = formatNumber(currentMoney);
+      mps_display.innerText = formatNumber(mps);
     });
 });
 
@@ -210,6 +214,16 @@ window.addEventListener('keydown', function(event) {
         codeButtonClick();
     }
 });
+
+
+
+
+
+setInterval(function() {
+  currentMoney += mps;
+  totalMoney += mps;
+  moneyAmount.innerText = formatNumber(currentMoney);
+}, 1000)
 
 
 
