@@ -58,7 +58,15 @@ if (file_exists($filePath)) {
                     <h3 class="mb-0">TERMINAL.SYS</h3>
                 </div>
                 <div class="d-flex flex-grow-1 align-items-center justify-content-center">
-
+                    <div class="text-success mb-0 text-center">
+                        Life Time Money: <span id="life-time-money">0</span>
+                        <br>
+                        Time Played Seconds: <span id="total-time-played-seconds">0</span>
+                        <br>
+                        Total Upgrades: <span id="total-buildings-owned">0</span>
+                        <br>
+                        Money Per Click: <span id="money-per-click">1</span>
+                    </div>
                 </div>
             </div>
 

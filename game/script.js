@@ -1,6 +1,10 @@
 const moneyAmount = document.getElementById('moneyAmount');
 const mps_display = document.getElementById('mps-display');
 const codeButton = document.getElementById('codeButton');
+const life_time_money = document.getElementById('life-time-money');
+const total_time_played_seconds = document.getElementById('total-time-played-seconds');
+const total_buildings_owned = document.getElementById('total-buildings-owned');
+const money_per_click = document.getElementById('money-per-click');
 
 // Level 2: Collaborative - Attaching listeners to multiple shop buttons
 const shopButtons = document.querySelectorAll('.shop-btn');
@@ -12,6 +16,7 @@ let totalMoney = serverData.total_money || 0;
 let currentMoney = serverData.current_money || 0;
 let click = 50;
 let clickMultiplier = 1;
+let playTime = serverData.play_time || 0;
 
 
 moneyAmount.innerText = formatNumber(currentMoney);
@@ -159,9 +164,10 @@ function purcahseItem(itemId) {
         }
 
         item.cost = Math.floor(item.cost * 1.15)
+        updateUI(shop);
+        return(item.code);
       }
-  updateUI(shop);
-  return(item.code);
+  return(0);
 }
 
 
@@ -174,6 +180,13 @@ shopButtons.forEach(button => {
       mps += purcahseItem(itemId);
       moneyAmount.innerText = formatNumber(currentMoney);
       mps_display.innerText = formatNumber(mps);
+      // Iterate through every object in the shop array
+      let totalOwned = 0;
+      shop.forEach(item => {
+          // Increment the counter by the amount owned of this specific item
+          totalOwned += item.owned;
+      });
+      total_buildings_owned.innerText = formatNumber(totalOwned);
     });
 });
 
@@ -220,9 +233,15 @@ window.addEventListener('keydown', function(event) {
 
 
 setInterval(function() {
+  //game logic updates
   currentMoney += mps;
-  totalMoney += mps;
+  totalMoney += mps;playTime += 1;
+
+  //visual updates
   moneyAmount.innerText = formatNumber(currentMoney);
+  life_time_money.innerText = formatNumber(totalMoney);
+  total_time_played_seconds.innerText = playTime;
+  money_per_click.innerText = formatNumber(click);
 }, 1000)
 
 
