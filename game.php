@@ -20,7 +20,7 @@ if (file_exists($filePath)) {
 
 
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,6 +59,12 @@ if (file_exists($filePath)) {
                 </div>
                 <div class="d-flex flex-grow-1 align-items-center justify-content-center">
                     <div class="text-success mb-0 text-center">
+                        <button class="btn btn-outline-success text-start py-3" id="save-game-button">
+                            Save game
+                        </button>
+                        <br>
+                        <br>
+                        <h2>Stats Menu</h2>
                         Life Time Money: <span id="life-time-money">0</span>
                         <br>
                         Time Played Seconds: <span id="total-time-played-seconds">0</span>
@@ -66,6 +72,57 @@ if (file_exists($filePath)) {
                         Total Upgrades: <span id="total-buildings-owned">0</span>
                         <br>
                         Money Per Click: <span id="money-per-click">1</span>
+                        <br>
+                        <br>
+                        <h2>Debug Menu</h2>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-money" id="extra-money1" data-id="1">
+                            +$100
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-money" id="extra-money2" data-id="2">
+                            +$1000
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-money" id="extra-money3" data-id="3">
+                            +$1000000
+                        </button>
+                        <br>
+                        <br>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-mpc" id="click-amount1" data-id="1">
+                            1 MPC
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-mpc" id="click-amount2" data-id="2">
+                            50 MPC
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-mpc" id="click-amount3" data-id="3">
+                            250 MPC
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-mpc" id="click-amount4" data-id="4">
+                            750 MPC
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-add-mpc" id="click-amount5" data-id="5">
+                            1500 MPC
+                        </button>
+                        <br>
+                        <br>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-playtime-increase" id="increase-time-played1" data-id="1">
+                            0 Seconds
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-playtime-increase" id="increase-time-played2" data-id="2">
+                            +100 Seconds
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-playtime-increase" id="increase-time-played3" data-id="3">
+                            +10000 Seconds
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-playtime-increase" id="increase-time-played4" data-id="4">
+                            +10000000 Seconds
+                        </button>
+                        <br>
+                        <br>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-force-spawn-powerup" id="force-spawn-powerup">
+                            Force Spawn Powerup
+                        </button>
+                        <button class="btn btn-outline-success text-start py-3 debug-btn-force critical-hit-time-period" id="force-critical-hit">
+                            Set Up Critical Hit
+                        </button>
                     </div>
                 </div>
             </div>

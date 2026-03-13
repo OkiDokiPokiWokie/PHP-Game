@@ -1,17 +1,17 @@
 {
     "user": {
         "password": "user",
-        "mps": 0,
-        "total_money": 0,
-        "current_money": 0,
+        "mps": 4308,
+        "total_money": 14503956,
+        "current_money": 14469150,
         "last_save": 1772411025,
         "building1": 0,
-        "building2": 0,
-        "building3": 0,
-        "building4": 0,
-        "building5": 0,
-        "building6": 0,
-        "building7": 0,
+        "building2": 2,
+        "building3": 6,
+        "building4": 5,
+        "building5": 4,
+        "building6": 3,
+        "building7": 1,
         "building8": 0,
         "building9": 0,
         "building10": 0,
@@ -19,7 +19,9 @@
         "building12": 0,
         "building13": 0,
         "building14": 0,
-        "building15": 0
+        "building15": 0,
+        "play_time": 20031040,
+        "click_power": 100
     },
     "user1": {
         "password": "user",

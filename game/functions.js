@@ -49,3 +49,41 @@ function updateUI(shopList) {
 
 
 
+
+
+function saveGameJS(currentMoney, totalMoney, playTime, mps, clickValue, shopArray) {
+    // We only want to send how many of each item the user owns
+    // This creates an object like { "building1": 5, "building2": 2 ... }
+    const buildingSales = {};
+    shopArray.forEach(item => {
+        buildingSales["building" + item.id] = item.owned;
+    });
+
+    // Package everything into one clean object
+    const saveData = {
+        current_money: currentMoney,
+        total_money: totalMoney,
+        play_time: playTime,
+        mps: mps,
+        click_power: clickValue,
+        ...buildingSales // This "spreads" the building keys into the main object
+    };
+
+    console.log("Attempting Auto-save...", saveData);
+
+    // Send the data to your PHP handler via fetch
+    fetch('game/save_game.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(saveData),
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log("Server Response:", result);
+    })
+    .catch(error => {
+        console.error("Save Error:", error);
+    });
+}

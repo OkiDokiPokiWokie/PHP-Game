@@ -5,9 +5,9 @@ const life_time_money = document.getElementById('life-time-money');
 const total_time_played_seconds = document.getElementById('total-time-played-seconds');
 const total_buildings_owned = document.getElementById('total-buildings-owned');
 const money_per_click = document.getElementById('money-per-click');
+const save_game_button = document.getElementById('save-game-button')
 
-// Level 2: Collaborative - Attaching listeners to multiple shop buttons
-const shopButtons = document.querySelectorAll('.shop-btn');
+
 
 
 
@@ -19,7 +19,91 @@ let clickMultiplier = 1;
 let playTime = serverData.play_time || 0;
 
 
+
+//debug add money
+const debugButtonMoney = document.querySelectorAll('.debug-btn-add-money');
+debugButtonMoney.forEach(button => {
+  button.addEventListener('click', function() {
+    const itemId = this.dataset.id;
+
+    if (itemId == 1) {
+      currentMoney += 100;
+      totalMoney += 100;
+    } else if (itemId == 2) {
+      currentMoney += 1000;
+      totalMoney += 1000;
+    } else if (itemId == 3) {
+      currentMoney += 1000000;
+      totalMoney += 1000000;
+    }
+    moneyAmount.innerText = formatNumber(currentMoney);
+    life_time_money.innerText = formatNumber(totalMoney);
+  });
+});
+//debug add money per click
+const debugButtonMPC = document.querySelectorAll('.debug-btn-add-mpc');
+debugButtonMPC.forEach(button => {
+  button.addEventListener('click', function() {
+    const itemId = this.dataset.id;
+
+    if (itemId == 1) {
+      click += 1;
+    } else if (itemId == 2) {
+      click += 50;
+    } else if (itemId == 3) {
+      click += 250;
+    } else if (itemId == 4) {
+      click += 750;
+    } else if (itemId == 5) {
+      click += 1500;
+    }
+    money_per_click.innerText = formatNumber(click);
+  });
+});
+//debug add time
+const debugButtonIncreasePlaytime = document.querySelectorAll('.debug-btn-playtime-increase');
+debugButtonIncreasePlaytime.forEach(button => {
+  button.addEventListener('click', function() {
+    const itemId = this.dataset.id;
+
+    if (itemId == 1) {
+      playTime = 0;
+    } else if (itemId == 2) {
+      playTime += 100;
+    } else if (itemId == 3) {
+      playTime += 10000;
+    } else if (itemId == 4) {
+      playTime += 10000000;
+    }
+    total_time_played_seconds.innerText = playTime;
+  });
+});
+
+
+
+// //force buttons    debug-btn-force-spawn-powerup          uncomment later on
+// const debugButtonForceSpawnPowerup = document.querySelectorAll('.debug-btn-force-spawn-powerup');
+// debugButtonForceSpawnPowerup.addEventListener('click', function() {
+//   //spawnPowerup();
+// });
+// //force buttons    debug-btn-force critical-hit-time-period
+// const debugButtonForceCriticalHitTimePeriod = document.querySelectorAll('.debug-btn-force-critical-hit-time-period');
+// debugButtonForceCriticalHitTimePeriod.addEventListener('click', function() {
+//   //criticalHitTimePeriod();
+// });
+                                                       
+//save game button
+
+
+
+
+
 moneyAmount.innerText = formatNumber(currentMoney);
+mps_display.innerText = formatNumber(mps);
+life_time_money.innerText = formatNumber(totalMoney);
+total_time_played_seconds.innerText = playTime;
+money_per_click.innerText = formatNumber(click);
+
 
 let shop = [
   {
@@ -171,6 +255,18 @@ function purcahseItem(itemId) {
 }
 
 
+// Level 2: Collaborative - Attaching listeners to multiple shop buttons
+const shopButtons = document.querySelectorAll('.shop-btn');
+//initial buildings owned update
+let totalOwned = 0;
+function updateBuildingsOwned() {
+  shop.forEach(item => {
+    totalOwned += item.owned;
+  });
+  console.log(totalOwned)
+  total_buildings_owned.innerText = formatNumber(totalOwned);
+}
+
 // Loop through each button found in the NodeList
 shopButtons.forEach(button => {
     button.addEventListener('click', function() {
@@ -181,12 +277,9 @@ shopButtons.forEach(button => {
       moneyAmount.innerText = formatNumber(currentMoney);
       mps_display.innerText = formatNumber(mps);
       // Iterate through every object in the shop array
-      let totalOwned = 0;
-      shop.forEach(item => {
-          // Increment the counter by the amount owned of this specific item
-          totalOwned += item.owned;
-      });
-      total_buildings_owned.innerText = formatNumber(totalOwned);
+      totalOwned = 0;
+      updateBuildingsOwned();
+      
     });
 });
 
@@ -202,6 +295,7 @@ shop.forEach((item, index) => {
 
 
 updateUI(shop);
+updateBuildingsOwned();
 
 
 
@@ -230,8 +324,11 @@ window.addEventListener('keydown', function(event) {
 
 
 
+save_game_button.addEventListener('click', () => {
+  saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop);
+})
 
-
+let saveTime = 0;
 setInterval(function() {
   //game logic updates
   currentMoney += mps;
@@ -242,6 +339,14 @@ setInterval(function() {
   life_time_money.innerText = formatNumber(totalMoney);
   total_time_played_seconds.innerText = playTime;
   money_per_click.innerText = formatNumber(click);
+
+
+  //save game
+  saveTime++;
+  if (saveTime >= 30) {
+    saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop);
+    saveTime = 0;
+  }
 }, 1000)
 
 
