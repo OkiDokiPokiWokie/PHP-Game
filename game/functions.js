@@ -72,7 +72,7 @@ function saveGameJS(currentMoney, totalMoney, playTime, mps, clickValue, shopArr
     console.log("Attempting Auto-save...", saveData);
 
     // Send the data to your PHP handler via fetch
-    fetch('game/save_game.php', {
+    fetch('functions.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

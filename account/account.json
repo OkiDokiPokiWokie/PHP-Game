@@ -2,9 +2,9 @@
     "user": {
         "password": "user",
         "mps": 4308,
-        "total_money": 14503956,
-        "current_money": 14469150,
-        "last_save": 1772411025,
+        "total_money": 15154464,
+        "current_money": 15119658,
+        "last_save": 1773426999,
         "building1": 0,
         "building2": 2,
         "building3": 6,
@@ -20,8 +20,8 @@
         "building13": 0,
         "building14": 0,
         "building15": 0,
-        "play_time": 20031040,
-        "click_power": 100
+        "play_time": 20031191,
+        "click_power": 50
     },
     "user1": {
         "password": "user",
