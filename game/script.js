@@ -260,6 +260,7 @@ const shopButtons = document.querySelectorAll('.shop-btn');
 //initial buildings owned update
 let totalOwned = 0;
 function updateBuildingsOwned() {
+  totalOwned = 0;
   shop.forEach(item => {
     totalOwned += item.owned;
   });
@@ -325,8 +326,8 @@ window.addEventListener('keydown', function(event) {
 
 
 save_game_button.addEventListener('click', () => {
-  saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop);
-})
+  saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop, String(Date.now()));
+});
 
 let saveTime = 0;
 setInterval(function() {
@@ -344,7 +345,7 @@ setInterval(function() {
   //save game
   saveTime++;
   if (saveTime >= 30) {
-    saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop);
+    saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop, String(Date.now()));
     saveTime = 0;
   }
 }, 1000)
