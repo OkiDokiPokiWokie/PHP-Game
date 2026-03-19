@@ -11,12 +11,12 @@ const save_game_button = document.getElementById('save-game-button')
 
 
 
-let mps = serverData.mps || 0;
-let totalMoney = serverData.total_money || 0;
-let currentMoney = serverData.current_money || 0;
-let click = 50;
-let clickMultiplier = 1;
-let playTime = serverData.play_time || 0;
+let mps = serverData.mps || "0";
+let totalMoney = serverData.total_money || "0";
+let currentMoney = serverData.current_money || "0";
+let click = "50";
+let clickMultiplier = "1";
+let playTime = serverData.play_time || "0";
 
 
 
@@ -27,14 +27,14 @@ debugButtonMoney.forEach(button => {
     const itemId = this.dataset.id;
 
     if (itemId == 1) {
-      currentMoney += 100;
-      totalMoney += 100;
+      currentMoney = stringMath(currentMoney, "100", "+");
+      totalMoney = stringMath(totalMoney, "100", "+");
     } else if (itemId == 2) {
-      currentMoney += 1000;
-      totalMoney += 1000;
+      currentMoney = stringMath(currentMoney, "1000", "+");
+      totalMoney = stringMath(totalMoney, "1000", "+");
     } else if (itemId == 3) {
-      currentMoney += 1000000;
-      totalMoney += 1000000;
+      currentMoney = stringMath(currentMoney, "1000000", "+");
+      totalMoney = stringMath(totalMoney, "1000000", "+");
     }
     moneyAmount.innerText = formatNumber(currentMoney);
     life_time_money.innerText = formatNumber(totalMoney);
@@ -47,15 +47,15 @@ debugButtonMPC.forEach(button => {
     const itemId = this.dataset.id;
 
     if (itemId == 1) {
-      click += 1;
+      click = stringMath(click, "1", "+");
     } else if (itemId == 2) {
-      click += 50;
+      click = stringMath(click, "50", "+");
     } else if (itemId == 3) {
-      click += 250;
+      click = stringMath(click, "250", "+");
     } else if (itemId == 4) {
-      click += 750;
+      click = stringMath(click, "750", "+");
     } else if (itemId == 5) {
-      click += 1500;
+      click = stringMath(click, "1500", "+");
     }
     money_per_click.innerText = formatNumber(click);
   });
@@ -69,11 +69,11 @@ debugButtonIncreasePlaytime.forEach(button => {
     if (itemId == 1) {
       playTime = 0;
     } else if (itemId == 2) {
-      playTime += 100;
+      playTime = stringMath(playTime, "100", "+");
     } else if (itemId == 3) {
-      playTime += 10000;
+      playTime = stringMath(playTime, "10000", "+");
     } else if (itemId == 4) {
-      playTime += 10000000;
+      playTime = stringMath(playTime, "10000000", "+");
     }
     total_time_played_seconds.innerText = playTime;
   });
@@ -108,123 +108,123 @@ money_per_click.innerText = formatNumber(click);
 let shop = [
   {
     name: "CPU",
-    cost: 50,
-    code: 1,
+    cost: "50",
+    code: "1",
     description: "Gives you more CPU power to process more code",
     id: 1,
-    owned: 0
+    owned: "0"
   },
   {
     name: "GPU",
-    cost: 200,
-    code: 2,
+    cost: "200",
+    code: "2",
     description: "Boosts parallel processing for faster rendering",
     id: 2,
-    owned: 0
+    owned: "0"
   },
   {
     name: "RAM",
-    cost: 400,
-    code: 8,
+    cost: "400",
+    code: "8",
     description: "More memory to handle bigger projects",
     id: 3,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Storage SSD",
-    cost: 800,
-    code: 32,
+    cost: "800",
+    code: "32",
     description: "Faster storage for quicker file access",
     id: 4,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Motherboard",
-    cost: 1600,
-    code: 128,
+    cost: "1600",
+    code: "128",
     description: "Connects all your components efficiently",
     id: 5,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Cooling System",
-    cost: 3200,
-    code: 512,
+    cost: "3200",
+    code: "512",
     description: "Prevents your CPU from overheating",
     id: 6,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Power Supply",
-    cost: 6400,
-    code: 2048,
+    cost: "6400",
+    code: "2048",
     description: "Keeps all components powered reliably",
     id: 7,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Network Card",
-    cost: 12800,
-    code: 8192,
+    cost: "12800",
+    code: "8192",
     description: "Faster network connections for online coding",
     id: 8,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Monitor",
-    cost: 25600,
-    code: 32768,
+    cost: "25600",
+    code: "32768",
     description: "See all your code clearly",
     id: 9,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Mechanical Keyboard",
-    cost: 51200,
-    code: 131072,
+    cost: "51200",
+    code: "131072",
     description: "Type faster and more accurately",
     id: 10,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Mouse",
-    cost: 102400,
-    code: 524288,
+    cost: "102400",
+    code: "524288",
     description: "Precise control for your interface",
     id: 11,
-    owned: 0
+    owned: "0"
   },
   {
     name: "AI Assistant",
-    cost: 204800,
-    code: 2097152,
+    cost: "204800",
+    code: "2097152",
     description: "Helps automate coding tasks",
     id: 12,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Virtual Server",
-    cost: 409600,
-    code: 8388608,
+    cost: "409600",
+    code: "8388608",
     description: "Run your projects in the cloud",
     id: 13,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Database Server",
-    cost: 819200,
-    code: 33554432,
+    cost: "819200",
+    code: "33554432",
     description: "Stores huge amounts of data efficiently",
     id: 14,
-    owned: 0
+    owned: "0"
   },
   {
     name: "Employee: Junior Coder",
-    cost: 1638400,
-    code: 134217728,
+    cost: "1638400",
+    code: "134217728",
     description: "Writes basic code automatically",
     id: 15,
-    owned: 0
+    owned: "0"
   }
 ];
 
@@ -234,35 +234,35 @@ function purcahseItem(itemId) {
       let item = shop.find(item => item.id == itemId)
       if (currentMoney >= item.cost) {
         currentMoney -= item.cost;
-        item.owned += 1;
+        item.owned = stringMath(item.owned, "1", "+");
         if (item.id == 1) {
-          click += 1
+          click = stringMath(click, "1", "+");;
         } else if (item.id == 5) {
-          click += 50
+          click = stringMath(click, "50", "+");
         } else if (item.id == 10) {
-          click += 100
+          click = stringMath(click, "100", "+");
         } else if (item.id == 11) {
-          click += 1000
+          click = stringMath(click, "1000", "+");
         } else {
-          mps += item.code;
+          mps = stringMath(mps, item.code, "+");
         }
 
-        item.cost = Math.floor(item.cost * 1.15)
+        item.cost = stringMath(item.cost, "1.15", "*")
         updateUI(shop);
         return(item.code);
       }
-  return(0);
+  return("0");
 }
 
 
 // Level 2: Collaborative - Attaching listeners to multiple shop buttons
 const shopButtons = document.querySelectorAll('.shop-btn');
 //initial buildings owned update
-let totalOwned = 0;
+let totalOwned = "0";
 function updateBuildingsOwned() {
-  totalOwned = 0;
+  totalOwned = "0";
   shop.forEach(item => {
-    totalOwned += item.owned;
+    totalOwned = stringMath(totalOwned, item.owned, "+");
   });
   console.log(totalOwned)
   total_buildings_owned.innerText = formatNumber(totalOwned);
@@ -274,11 +274,11 @@ shopButtons.forEach(button => {
       // 'this' refers to the specific button that was clicked
       const itemId = this.dataset.id;
 
-      mps += purcahseItem(itemId);
+      mps = stringMath(mps, purcahseItem(itemId), "+");
       moneyAmount.innerText = formatNumber(currentMoney);
       mps_display.innerText = formatNumber(mps);
       // Iterate through every object in the shop array
-      totalOwned = 0;
+      totalOwned = "0";
       updateBuildingsOwned();
       
     });
@@ -286,13 +286,24 @@ shopButtons.forEach(button => {
 
 
 shop.forEach((item, index) => {
-  let buildingKey = "building" + item.id;
-  item.owned = serverData[buildingKey] || 0;
+    let buildingKey = "building" + item.id;
 
-  if (item.owned > 0) {
-      item.cost = Math.floor(item.cost * (1.15 ** item.owned));
-  }
+    // 1. Get how many the user owns from the server data (as a string)
+    item.owned = serverData[buildingKey] || "0";
+
+    // 2. Scale the cost using the string-safe exponent logic
+    if (item.owned !== "0") {
+        // We calculate: BaseCost * (1.15 ** owned)
+
+        // First, get the growth multiplier (e.g., 1.15 to the power of 500)
+        let growthMultiplier = stringMath("1.15", item.owned, "**");
+
+        // Second, multiply the base cost by that growth factor
+        item.cost = stringMath(item.cost, growthMultiplier, "*");
+    }
 });
+
+
 
 
 updateUI(shop);
@@ -302,8 +313,10 @@ updateBuildingsOwned();
 
 
 function codeButtonClick() {
-  currentMoney += click * clickMultiplier;
-  totalMoney += click * clickMultiplier;
+  let tempCurrentMoney = stringMath(click, clickMultiplier, "*");
+  currentMoney = stringMath(currentMoney, tempCurrentMoney, "+");
+  let tempTotalMoney = stringMath(click, clickMultiplier, "*");
+  totalMoney = stringMath(totalMoney, tempTotalMoney, "+");
 
   moneyAmount.innerText = formatNumber(currentMoney);
 }
@@ -329,11 +342,12 @@ save_game_button.addEventListener('click', () => {
   saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop, String(Date.now()));
 });
 
-let saveTime = 0;
+let saveTime = "0";
 setInterval(function() {
   //game logic updates
-  currentMoney += mps;
-  totalMoney += mps;playTime += 1;
+  currentMoney = stringMath(currentMoney, mps, "+");
+  totalMoney = stringMath(totalMoney, mps, "+");
+  playTime = stringMath(playTime, "1", "+");
 
   //visual updates
   moneyAmount.innerText = formatNumber(currentMoney);
@@ -343,10 +357,10 @@ setInterval(function() {
 
 
   //save game
-  saveTime++;
-  if (saveTime >= 30) {
+  saveTime = stringMath(saveTime, "1", "+");
+  if (saveTime == "30" || saveTime == "31") {
     saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop, String(Date.now()));
-    saveTime = 0;
+    saveTime = "0";
   }
 }, 1000)
 
