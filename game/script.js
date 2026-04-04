@@ -17,6 +17,7 @@ let currentMoney = serverData.current_money || "0";
 let click = "50";
 let clickMultiplier = "1";
 let playTime = serverData.play_time || "0";
+let cps = [];
 
 
 
@@ -319,6 +320,7 @@ function codeButtonClick() {
   totalMoney = stringMath(totalMoney, tempTotalMoney, "+");
 
   moneyAmount.innerText = formatNumber(currentMoney);
+  cps.push(Date.now());
 }
 
 
@@ -362,6 +364,34 @@ setInterval(function() {
     saveGameJS(currentMoney, totalMoney, playTime, mps, click, shop, String(Date.now()));
     saveTime = "0";
   }
+
+
+
+  //clean up cps array
+  for (let i = cps.length - 1; i >= 0; i--) {
+      if (cps[i] < Date.now() - 1000) {
+          cps.splice(i, 1);
+      }
+  }
+  console.log("CPS: " + cps);
+
+  //critical hit calculation
+  if (cps.length >= 5){
+    clickMultiplier = "1.2";
+    console.log("FAST CLICK| Current CPS: " + cps.length);
+  } else {
+    clickMultiplier = "1";
+    console.log("standard click");
+  }
+
+
+
+
+
+
+  
+
+
 }, 1000)
 
 

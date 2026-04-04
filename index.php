@@ -32,17 +32,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Create a fresh user template
             $newUser = [
                 "password" => $password,
-                "current_money" => 0,
-                "total_money" => 0,
-                "play_time" => 0,
-                "mps" => 0,
-                "click_power" => 50,
+                "current_money" => "0",
+                "total_money" => "0",
+                "play_time" => "0",
+                "mps" => "0",
+                "click_power" => "50",
                 "last_save" => (string)(time() * 1000), // 13-digit string format
             ];
 
             // Initialize buildings 1-15
             for ($i = 1; $i <= 15; $i++) {
-                $newUser["building$i"] = 0;
+                $newUser["building$i"] = "0";
             }
 
             // Add the new user to the main list (DOES NOT REPLACE OTHERS)
