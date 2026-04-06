@@ -156,8 +156,14 @@ function stringMath(num1, num2, operator) {
         return res;
     }
 
-    // 3. SUBTRACTION
+    // 3. SUBTRACTION (Optimized with "-9" Sentinel Value)
     if (operator === "-") {
+        // Check if num2 (cost) is strictly greater than num1 (money)
+        if (num2.length > num1.length || (num1.length === num2.length && num2 > num1)) {
+            console.log("-9"); 
+            return "-9"; // Immediately return the sentinel value and skip the math!
+        }
+
         let res = "";
         let borrow = 0;
         let i = num1.length - 1, j = num2.length - 1;
@@ -247,6 +253,7 @@ function stringMath(num1, num2, operator) {
     console.log("0");
     return "0";
 }
+
 
 
 

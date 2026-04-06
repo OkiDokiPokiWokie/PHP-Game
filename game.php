@@ -25,7 +25,7 @@ if (file_exists($filePath)) {
 <head>
     <meta charset="UTF-8">
     <title>Coding Clicker</title>
-  <link rel="stylesheet" href="game/game.css">
+    <link rel="stylesheet" href="game/game.css">
     <link rel="stylesheet" href="assets/bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/css/bootstrap.min.css">
 </head>
 <body class="bg-dark text-white">
@@ -50,6 +50,9 @@ if (file_exists($filePath)) {
                     <button class="btn codeButtonContainer"> 
                         <img src="game/assets/keyboard.png" alt="codeButton" id="codeButton" class="codeButton" width="300">
                     </button>
+                    <h3 class="text-success mb-0 text-center">
+                        <span id="critical-hit-count-down">Critical Hit In 120</span>
+                    </h3>
                 </div>
             </div>
 
@@ -59,6 +62,11 @@ if (file_exists($filePath)) {
                 </div>
                 <div class="d-flex flex-grow-1 align-items-center justify-content-center">
                     <div class="text-success mb-0 text-center">
+                        <a class="btn btn-outline-success text-start py-3" href="leaderboard.php" target="_blank">
+                            Leaderboard
+                        </a>
+                        <br>
+                        <br>
                         <button class="btn btn-outline-success text-start py-3" id="save-game-button">
                             Save game
                         </button>

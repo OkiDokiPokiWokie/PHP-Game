@@ -5,7 +5,8 @@ const life_time_money = document.getElementById('life-time-money');
 const total_time_played_seconds = document.getElementById('total-time-played-seconds');
 const total_buildings_owned = document.getElementById('total-buildings-owned');
 const money_per_click = document.getElementById('money-per-click');
-const save_game_button = document.getElementById('save-game-button')
+const save_game_button = document.getElementById('save-game-button');
+const critical_hit_count_down = document.getElementById('critical-hit-count-down');
 
 
 
@@ -18,6 +19,10 @@ let click = "50";
 let clickMultiplier = "1";
 let playTime = serverData.play_time || "0";
 let cps = [];
+
+//for critical hit system
+let isCriticalHitTimePeriod = false;
+let criticalHitCountDown = "120";
 
 
 
@@ -232,27 +237,42 @@ let shop = [
 
 
 function purcahseItem(itemId) {
-      let item = shop.find(item => item.id == itemId)
-      if (currentMoney >= item.cost) {
-        currentMoney -= item.cost;
+    let item = shop.find(item => item.id == itemId);
+
+    // 1. Check if we can afford it using a temporary subtraction
+    // If currentMoney - item.cost starts with "-", it means we are too poor.
+    let checkAfford = stringMath(currentMoney, item.cost, "-");
+
+    if (!checkAfford.includes("-")) { 
+        // 2. We can afford it! Update currentMoney with the subtraction result
+        currentMoney = checkAfford;
+
         item.owned = stringMath(item.owned, "1", "+");
+
+        // 3. Handle building-specific rewards
         if (item.id == 1) {
-          click = stringMath(click, "1", "+");;
+            click = stringMath(click, "1", "+");
         } else if (item.id == 5) {
-          click = stringMath(click, "50", "+");
+            click = stringMath(click, "50", "+");
         } else if (item.id == 10) {
-          click = stringMath(click, "100", "+");
+            click = stringMath(click, "100", "+");
         } else if (item.id == 11) {
-          click = stringMath(click, "1000", "+");
+            click = stringMath(click, "1000", "+");
         } else {
-          mps = stringMath(mps, item.code, "+");
+            // Only add to MPS if it's not a click-power building
+            mps = stringMath(mps, item.code, "+");
         }
 
-        item.cost = stringMath(item.cost, "1.15", "*")
+        // 4. Increase the price for the next one
+        item.cost = stringMath(item.cost, "1.15", "*");
+
+        // 5. Update UI
         updateUI(shop);
-        return(item.code);
-      }
-  return("0");
+        return item.code;
+    }
+
+    console.log("Not enough money!");
+    return("0");
 }
 
 
@@ -314,13 +334,30 @@ updateBuildingsOwned();
 
 
 function codeButtonClick() {
-  let tempCurrentMoney = stringMath(click, clickMultiplier, "*");
-  currentMoney = stringMath(currentMoney, tempCurrentMoney, "+");
-  let tempTotalMoney = stringMath(click, clickMultiplier, "*");
-  totalMoney = stringMath(totalMoney, tempTotalMoney, "+");
+  let tempCurrentMoney = "";
+  let tempTotalMoney = "";
+  if (criticalHitCountDown == "0") {
+    tempCurrentMoney = stringMath(click, "10", "*");
+    tempCurrentMoney = stringMath(tempCurrentMoney, 1.25, "*");
+    currentMoney = stringMath(currentMoney, tempCurrentMoney, "+");
+    tempTotalMoney = stringMath(click, "10", "*");
+    tempTotalMoney = stringMath(tempTotalMoney, 1.25, "*");
+    totalMoney = stringMath(totalMoney, tempTotalMoney, "+");
 
-  moneyAmount.innerText = formatNumber(currentMoney);
-  cps.push(Date.now());
+    moneyAmount.innerText = formatNumber(currentMoney);
+    cps.push(Date.now());
+    return;
+    
+  } else {
+    tempCurrentMoney = stringMath(click, clickMultiplier, "*");
+    currentMoney = stringMath(currentMoney, tempCurrentMoney, "+");
+    tempTotalMoney = stringMath(click, clickMultiplier, "*");
+    totalMoney = stringMath(totalMoney, tempTotalMoney, "+");
+
+    moneyAmount.innerText = formatNumber(currentMoney);
+    cps.push(Date.now());
+  }
+  
 }
 
 
@@ -345,6 +382,7 @@ save_game_button.addEventListener('click', () => {
 });
 
 let saveTime = "0";
+
 setInterval(function() {
   //game logic updates
   currentMoney = stringMath(currentMoney, mps, "+");
@@ -375,7 +413,7 @@ setInterval(function() {
   }
   console.log("CPS: " + cps);
 
-  //critical hit calculation
+  //fast click calculation
   if (cps.length >= 5){
     clickMultiplier = "1.2";
     console.log("FAST CLICK| Current CPS: " + cps.length);
@@ -383,6 +421,23 @@ setInterval(function() {
     clickMultiplier = "1";
     console.log("standard click");
   }
+
+
+
+
+  //critical hit system
+  // --- Inside setInterval ---
+
+  // 1. Check for reset FIRST (at the start of the next second)
+  if (criticalHitCountDown === "0") {
+      criticalHitCountDown = "120";
+  } else {
+      // 2. Otherwise, keep counting down
+      criticalHitCountDown = stringMath(criticalHitCountDown, "1", "-");
+  }
+
+  // 3. Update the UI
+  critical_hit_count_down.innerText = "Critical Hit In " + criticalHitCountDown;
 
 
 
