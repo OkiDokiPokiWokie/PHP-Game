@@ -1,6 +1,7 @@
 function formatNumber(numStr) {
-    // 1. Force to string and remove any decimal points if they exist
-    // (Your stringMath multiplication sometimes leaves them at the end)
+    // 1. Force to string and remove any decimal points
+    // Since your stringMath sometimes returns whole numbers as strings, 
+    // we ensure we only look at the integer part.
     numStr = numStr.toString().split('.')[0];
 
     let len = numStr.length;
@@ -10,32 +11,42 @@ function formatNumber(numStr) {
         return numStr;
     }
 
+    // 3. MASSIVE Suffix Array 
+    // This list now goes from Thousand (k) to Centillion (Ct)
     var suffixes = [
         "k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc",
         "UnDc", "DuDc", "TrDc", "QaDc", "QiDc", "SxDc", "SpDc", "OcDc", "NoDc",
-        "Vg"
+        "Vg", "UnVg", "DuVg", "TrVg", "QaVg", "QiVg", "SxVg", "SpVg", "OcVg", "NoVg",
+        "Tg", "UnTg", "DuTg", "TrTg", "QaTg", "QiTg", "SxTg", "SpTg", "OcTg", "NoTg",
+        "Qd", "UnQd", "DuQd", "TrQd", "QaQd", "QiQd", "SxQd", "SpQd", "OcQd", "NoQd",
+        "Qt", "UnQt", "DuQt", "TrQt", "QaQt", "QiQt", "SxQt", "SpQt", "OcQt", "NoQt",
+        "St", "UnSt", "DuSt", "TrSt", "QaSt", "QiSt", "SxSt", "SpSt", "OcSt", "NoSt",
+        "Sept", "UnSe", "DuSe", "TrSe", "QaSe", "QiSe", "SxSe", "SpSe", "OcSe", "NoSe",
+        "Ot", "UnOt", "DuOt", "TrOt", "QaOt", "QiOt", "SxOt", "SpOt", "OcOt", "NoOt",
+        "Nt", "UnNt", "DuNt", "TrNt", "QaNt", "QiNt", "SxNt", "SpNt", "OcNt", "NoNt",
+        "Ct" 
     ];
 
-    // 3. Determine the tier
-    // Length 4,5,6 = tier 0 (k)
-    // Length 7,8,9 = tier 1 (M)
+    // 4. Determine the tier
     let tier = Math.floor((len - 1) / 3) - 1;
 
-    // Safety check for suffix array bounds
-    if (tier >= suffixes.length) tier = suffixes.length - 1;
+    // FIX: Safety check for suffix array bounds
+    // Instead of 'if (tier >= suffixes.length) tier = suffixes.length - 1;'
+    // We use Math.min to ensure we never grab an undefined index.
+    let maxIndex = suffixes.length - 1;
+    if (tier > maxIndex) {
+        tier = maxIndex;
+    }
 
-    // 4. Find where the decimal point goes
-    // This calculates how many digits are "in front" of the decimal.
-    // Example: "10000" (len 5). 5 % 3 is 2. So "10.00k"
-    // If len % 3 is 0, it means there are 3 digits in front (e.g., 100k)
+    // 5. Calculate formatting
     let remainder = len % 3;
     let digitsBeforeDecimal = remainder === 0 ? 3 : remainder;
 
-    // 5. Slice the string
+    // 6. Slice the string
     let intPart = numStr.slice(0, digitsBeforeDecimal);
     let fracPart = numStr.slice(digitsBeforeDecimal, digitsBeforeDecimal + 2);
 
-    // 6. Final Assembly
+    // 7. Final Assembly (e.g., "1.23Vg")
     return intPart + "." + fracPart + suffixes[tier];
 }
 
@@ -254,6 +265,11 @@ function stringMath(num1, num2, operator) {
     return "0";
 }
 
+let one = "645365436345600";
+let two = "70646456645645634564564564560";
+let three = "-";
+
+stringMath(one, two, three); // This will now log and return "-9"
 
 
 
